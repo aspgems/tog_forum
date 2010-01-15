@@ -7,7 +7,7 @@ class CreateTogForumTables < ActiveRecord::Migration
     end
 
     create_table :tog_forum_topics do |t|
-      t.integer  :forum_id
+      t.integer  :forum_id, :references => :tog_forum_forums
       t.integer  :user_id
       t.string   :title
       t.text     :body
@@ -19,7 +19,7 @@ class CreateTogForumTables < ActiveRecord::Migration
     end
 
     create_table :tog_forum_posts do |t|
-      t.integer  :topic_id
+      t.integer  :topic_id, :references => :tog_forum_topics
       t.integer  :user_id
       t.text     :body
       t.timestamps
@@ -28,8 +28,8 @@ class CreateTogForumTables < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :tog_forum_forums
-    drop_table :tog_forum_topics
     drop_table :tog_forum_posts
+    drop_table :tog_forum_topics
+    drop_table :tog_forum_forums
   end
 end
